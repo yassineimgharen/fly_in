@@ -56,3 +56,9 @@ other = conn.get_other_zone(roof1)  # Returns hub
 - Capacities are positive integers
 - Connections reference existing zones
 - No duplicate connections
+
+# Graph
+Store all zones and connections
+Store start and end zones
+Find neighbors of a zone
+Find connection between two zones

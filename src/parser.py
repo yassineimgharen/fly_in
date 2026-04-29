@@ -148,15 +148,13 @@ def parse_file(filepath: str) -> tuple[int, list[Zone], list[Connection], Zone, 
                     print(f"Error on line {line_number}: Multiple start_hub definitions found")
                     sys.exit(1)
                 start_zone = zone
-                print(f"✓ Created start_hub: {name} at ({x}, {y})")
+
             elif zone_type == "end_hub":
                 if end_zone is not None:
                     print(f"Error on line {line_number}: Multiple end_hub definitions found")
                     sys.exit(1)
                 end_zone = zone
-                print(f"✓ Created end_hub: {name} at ({x}, {y})")
-            else:
-                print(f"✓ Created hub: {name} at ({x}, {y})")
+
 
         else:
             # Parse connections
@@ -174,8 +172,7 @@ def parse_file(filepath: str) -> tuple[int, list[Zone], list[Connection], Zone, 
                     main_part = rest
                     metadata_part = None
 
-                print(f"Connection main part: {main_part}")
-                print(f"Connection metadata: {metadata_part}")
+
                 # Split zone names by "-"
                 zone_names = main_part.split("-")
 
@@ -222,7 +219,7 @@ def parse_file(filepath: str) -> tuple[int, list[Zone], list[Connection], Zone, 
                 # Create Connection object
                 connection = Connection(zone1, zone2, max_link_capacity)
                 connections.append(connection)
-                print(f"✓ Created connection: {name1}-{name2} (capacity={max_link_capacity})")
+
             else:
                 print(f"Line {line_number}: Unknown line format: {line}")
 
@@ -234,9 +231,5 @@ def parse_file(filepath: str) -> tuple[int, list[Zone], list[Connection], Zone, 
     if end_zone is None:
         print("Error: No end_hub defined")
         sys.exit(1)
-
-    print(f"\n✓ Total zones parsed: {len(zones)}")
-    print(f"✓ Start: {start_zone.name}")
-    print(f"✓ End: {end_zone.name}")
 
     return nb_drones, zones, connections, start_zone, end_zone

@@ -1,5 +1,6 @@
 """Data models for the drone routing system."""
 
+import sys
 from typing import Optional
 
 
@@ -132,3 +133,54 @@ class Drone:
             drone_id: Unique identifier for this drone
         """
         self.id = drone_id
+
+
+class Graph:
+    """Represents the entire drone network."""
+
+    def __init__(
+        self,
+        nb_drones: int,
+        zones: list[Zone],
+        connections: list[Connection],
+        start_zone: Zone,
+        end_zone: Zone
+    ) -> None:
+        """
+        Initialize the Graph.
+
+        Args:
+            nb_drones: Number of drones to route
+            zones: List of all zones
+            connections: List of all connections
+            start_zone: Starting zone
+            end_zone: Ending zone
+        """
+        self.nb_drones = nb_drones
+        self.zones = zones
+        self.connections = connections
+        self.start_zone = start_zone
+        self.end_zone = end_zone
+
+    def get_neighbors(self, zone: Zone) -> list[Zone]:
+        """
+        Get all zones reachable from the given zone.
+        List of neighboring zones
+        """
+        neighbors = []
+        for connection in self.connections:
+            if connection.zone1 == zone:
+                neighbors.append(connection.zone2)
+            elif connection.zone2 == zone:
+                neighbors.append(connection.zone1)
+        return neighbors
+
+    def get_connection(self, zone1: Zone, zone2: Zone) -> Connection:
+        """
+        Get the connection between two zones.
+        """
+        for connection in self.connections:
+            if connection.connects(zone1, zone2):
+                return connection
+        print(f"Error: No connection between '{zone1.name}' and '{zone2.name}'")
+        sys.exit(1)

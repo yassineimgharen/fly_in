@@ -172,7 +172,6 @@ def parse_file(filepath: str) -> tuple[int, list[Zone], list[Connection], Zone, 
                     main_part = rest
                     metadata_part = None
 
-
                 # Split zone names by "-"
                 zone_names = main_part.split("-")
 

@@ -1,0 +1,21 @@
+# Test priority zone preference
+# Path A: Start -> A1 -> A2 -> End (3 normal zones, cost = 3)
+# Path B: Start -> B1 -> B2 -> End (B1 is priority, cost = 1 + 1 + 1 = 3, but priority bonus makes it cheaper)
+nb_drones: 2
+
+start_hub: Start 0 1 [color=green]
+hub: A1 1 0 [zone=normal color=blue]
+hub: A2 2 0 [zone=normal color=blue]
+hub: B1 1 2 [zone=priority color=yellow]
+hub: B2 2 2 [zone=normal color=yellow]
+end_hub: End 3 1 [color=red]
+
+# Path A (normal)
+connection: Start-A1
+connection: A1-A2
+connection: A2-End
+
+# Path B (with priority)
+connection: Start-B1
+connection: B1-B2
+connection: B2-End

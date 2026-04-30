@@ -69,7 +69,7 @@ class Pathfinder:
         paths.append(first_path)
 
         # Try to find alternative paths by excluding zones from previous paths
-        for zone in first_path[1:-1]:  # Exclude middle zones only
+        for zone in first_path[1:-1]: # Exclude middle zones only
             if len(paths) >= k:
                 break
 

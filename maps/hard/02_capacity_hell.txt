@@ -22,6 +22,7 @@ connection: start-gate1 [max_link_capacity=1]
 connection: gate1-gate2 [max_link_capacity=1]
 connection: gate2-gate3 [max_link_capacity=1]
 
+
 # Waiting areas for queue management
 connection: gate1-waiting_area1
 connection: gate2-waiting_area2

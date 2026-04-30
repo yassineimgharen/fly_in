@@ -48,17 +48,11 @@ class Simulator:
 
             # Determine all potential moves
             for drone in self.drones:
-                if drone in self.in_transit:
-                    continue
-
                 if self.drone_positions[drone] == self.graph.end_zone:
                     continue
 
-                next_zone = self._get_next_zone(drone)
-                if next_zone is None:
-                    continue
-
                 current_zone = self.drone_positions[drone]
+                next_zone = self._get_next_zone(drone)
                 moves_this_turn.append((drone, current_zone, next_zone))
 
             # Execute moves
@@ -153,6 +147,7 @@ class Simulator:
         connection = self.graph.get_connection(from_zone, to_zone)
 
         using_connection = 0
+        # Count how many drone are already using the conection between A-B
         for moved_drone, moved_from, moved_to in executed_moves:
             if (moved_from == from_zone and moved_to == to_zone) or \
                (moved_from == to_zone and moved_to == from_zone):

@@ -13,31 +13,29 @@ class Pathfinder:
         self.graph = graph
 
     def find_path(self, start: Zone, end: Zone) -> list[Zone]:
-        """Find shortest path considering zone costs and priority."""
-        queue = [(start, 0)]  # (zone, cost)
+        """
+        Find shortest path from start to end using BFS.
+        Returns:
+            List of zones representing the path, empty if no path found
+        """
+        queue = [start]
+        visited = {start}
         came_from: dict[Zone, Zone | None] = {start: None}
-        cost_to: dict[Zone, int] = {start: 0}
+
 
         while queue:
-            current, _ = queue.pop(0)
+            current = queue.pop(0) 
 
             if current == end:
                 return self._reconstruct_path(came_from, end)
 
             for neighbor in self.graph.get_neighbors(current):
-                if neighbor.is_blocked():
-                    continue
-                
-                new_cost = cost_to[current] + neighbor.cost
-                
-                if neighbor not in cost_to or new_cost < cost_to[neighbor]:
-                    cost_to[neighbor] = new_cost
+                if neighbor not in visited and not neighbor.is_blocked():
+                    visited.add(neighbor)
                     came_from[neighbor] = current
-                    queue.append((neighbor, new_cost))
-                    # Sort by cost, then prefer priority zones
-                    queue.sort(key=lambda x: (cost_to[x[0]], 0 if x[0].zone_type == 'priority' else 1))
+                    queue.append(neighbor)
+        return []  # No path found
 
-        return []
     def _reconstruct_path(
         self,
         came_from: dict[Zone, Zone | None],
@@ -102,7 +100,7 @@ class Pathfinder:
         # Fill remaining with first path if needed
         while len(paths) < k:
             paths.append(first_path)
-        
+
         return paths[:k]
 
     def _find_path_excluding_set(self, exclude: set[Zone]) -> list[Zone]:

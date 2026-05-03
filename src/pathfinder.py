@@ -22,14 +22,18 @@ class Pathfinder:
         visited = {start}
         came_from: dict[Zone, Zone | None] = {start: None}
 
-
         while queue:
-            current = queue.pop(0) 
+            current = queue.pop(0)
 
             if current == end:
                 return self._reconstruct_path(came_from, end)
 
-            for neighbor in self.graph.get_neighbors(current):
+            # Get neighbors and sort by priority (priority zones first)
+            neighbors = self.graph.get_neighbors(current)
+            neighbors = self._sort_by_priority(neighbors)
+
+            for neighbor in neighbors:
+                # Check if zone is blocked
                 if neighbor not in visited and not neighbor.is_blocked():
                     visited.add(neighbor)
                     came_from[neighbor] = current
@@ -133,3 +137,17 @@ class Pathfinder:
             if path_tuple == existing_tuple:
                 return True
         return False
+
+    def _sort_by_priority(self, zones: list[Zone]) -> list[Zone]:
+        """
+        Sort zones to prefer priority zones first.
+        
+        Args:
+            zones: List of zones to sort
+            
+        Returns:
+            Sorted list with priority zones first
+        """
+        priority_zones = [z for z in zones if z.zone_type == "priority"]
+        other_zones = [z for z in zones if z.zone_type != "priority"]
+        return priority_zones + other_zones

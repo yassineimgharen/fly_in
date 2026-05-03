@@ -31,20 +31,32 @@ def test_map(map_file: str, target_turns: int) -> None:
 
 
 if __name__ == "__main__":
+    print("\n" + "="*70)
+    print("FINAL PERFORMANCE TEST - ALL FEATURES IMPLEMENTED")
+    print("="*70)
+
     # Easy maps
-    # print("\n### EASY MAPS ###")
-    # test_map("maps/easy/01_linear_path.txt", 6)
-    # test_map("maps/easy/02_simple_fork.txt", 6)
-    # test_map("maps/easy/03_basic_capacity.txt", 8)
+    print("\n### EASY MAPS ###")
+    test_map("maps/easy/01_linear_path.txt", 6)
+    test_map("maps/easy/02_simple_fork.txt", 6)
+    test_map("maps/easy/03_basic_capacity.txt", 8)
 
-    # # Medium maps
-    # print("\n### MEDIUM MAPS ###")
-    # test_map("maps/medium/01_dead_end_trap.txt", 15)
-    # test_map("maps/medium/02_circular_loop.txt", 20)
-    # test_map("maps/medium/03_priority_puzzle.txt", 12)
+    # Medium maps
+    print("\n### MEDIUM MAPS ###")
+    test_map("maps/medium/01_dead_end_trap.txt", 15)
+    test_map("maps/medium/02_circular_loop.txt", 20)
+    test_map("maps/medium/03_priority_puzzle.txt", 12)
 
-    # # Hard maps
-    # print("\n### HARD MAPS ###")
-    # test_map("maps/hard/01_maze_nightmare.txt", 45)
-    # test_map("maps/hard/02_capacity_hell.txt", 60)
-    test_map("test.txt", 5)
+    # Hard maps
+    print("\n### HARD MAPS ###")
+    test_map("maps/hard/01_maze_nightmare.txt", 45)
+    test_map("maps/hard/02_capacity_hell.txt", 60)
+    test_map("maps/hard/03_ultimate_challenge.txt", 35)
+
+    # Challenger map
+    print("\n### CHALLENGER MAP ###")
+    test_map("maps/challenger/01_the_impossible_dream.txt", 45)
+
+    print("\n" + "="*70)
+    print("TEST COMPLETE")
+    print("="*70)

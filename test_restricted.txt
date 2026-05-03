@@ -1,0 +1,13 @@
+# Test map: Restricted zone demonstration
+nb_drones: 2
+
+start_hub: Start 0 0 [color=green max_drones=2]
+hub: A 1 0 [zone=normal color=blue]
+hub: B 2 0 [zone=restricted color=yellow]
+hub: C 3 0 [zone=normal color=blue]
+end_hub: Goal 4 0 [color=red max_drones=2]
+
+connection: Start-A
+connection: A-B
+connection: B-C
+connection: C-Goal

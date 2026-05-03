@@ -68,7 +68,6 @@ def parse_file(filepath: str) -> tuple[int, list[Zone], list[Connection], Zone, 
                 print(f"Error on line {line_number}: nb_drones must be a positive integer, got {nb_drones}")
                 sys.exit(1)
 
-            print(f"✓ Parsed nb_drones: {nb_drones}")
             first_line_parsed = True
 
         elif line.startswith("start_hub:") or line.startswith("end_hub:") or line.startswith("hub:"):
@@ -162,7 +161,6 @@ def parse_file(filepath: str) -> tuple[int, list[Zone], list[Connection], Zone, 
                 # Split by ":"
                 parts = line.split(":", 1)
                 rest = parts[1].strip()
-
                 # Check for metadata
                 if "[" in rest:
                     main_part, metadata_part = rest.split("[", 1)
@@ -174,7 +172,6 @@ def parse_file(filepath: str) -> tuple[int, list[Zone], list[Connection], Zone, 
 
                 # Split zone names by "-"
                 zone_names = main_part.split("-")
-
                 # Find Zone objects by name
                 name1 = zone_names[0]
                 name2 = zone_names[1]

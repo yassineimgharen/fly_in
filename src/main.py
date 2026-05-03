@@ -18,7 +18,7 @@ def test_map(map_file: str, target_turns: int) -> None:
     paths = pathfinder.find_multiple_paths(graph.nb_drones)
 
     unique_paths = len(set(tuple(z.name for z in p) for p in paths))
-    print(f"Drones: {graph.nb_drones}, Unique paths: {unique_paths}")
+    print(f"Drones: {graph.nb_drones}")
 
     simulator = Simulator(graph, paths)
     simulator.run()
@@ -31,10 +31,6 @@ def test_map(map_file: str, target_turns: int) -> None:
 
 
 if __name__ == "__main__":
-    print("\n" + "="*70)
-    print("FINAL PERFORMANCE TEST - ALL FEATURES IMPLEMENTED")
-    print("="*70)
-
     # Easy maps
     # print("\n### EASY MAPS ###")
     # test_map("maps/easy/01_linear_path.txt", 6)
@@ -51,8 +47,4 @@ if __name__ == "__main__":
     # print("\n### HARD MAPS ###")
     # test_map("maps/hard/01_maze_nightmare.txt", 45)
     # test_map("maps/hard/02_capacity_hell.txt", 60)
-    test_map("test.txt", 35)
-
-    print("\n" + "="*70)
-    print("TEST COMPLETE")
-    print("="*70)
+    test_map("test.txt", 5)

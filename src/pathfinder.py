@@ -13,27 +13,31 @@ class Pathfinder:
         self.graph = graph
 
     def find_path(self, start: Zone, end: Zone) -> list[Zone]:
-        """
-        Find shortest path from start to end using BFS.
-        Returns:
-            List of zones representing the path, empty if no path found
-        """
-        queue = [start]
-        visited = {start}
+        """Find shortest path considering zone costs and priority."""
+        queue = [(start, 0)]  # (zone, cost)
         came_from: dict[Zone, Zone | None] = {start: None}
+        cost_to: dict[Zone, int] = {start: 0}
 
         while queue:
-            current = queue.pop(0)
+            current, _ = queue.pop(0)
 
             if current == end:
                 return self._reconstruct_path(came_from, end)
 
             for neighbor in self.graph.get_neighbors(current):
-                if neighbor not in visited and not neighbor.is_blocked():
-                    visited.add(neighbor)
+                if neighbor.is_blocked():
+                    continue
+                
+                new_cost = cost_to[current] + neighbor.cost
+                
+                if neighbor not in cost_to or new_cost < cost_to[neighbor]:
+                    cost_to[neighbor] = new_cost
                     came_from[neighbor] = current
-                    queue.append(neighbor)
-        return []  # No path found
+                    queue.append((neighbor, new_cost))
+                    # Sort by cost, then prefer priority zones
+                    queue.sort(key=lambda x: (cost_to[x[0]], 0 if x[0].zone_type == 'priority' else 1))
+
+        return []
     def _reconstruct_path(
         self,
         came_from: dict[Zone, Zone | None],
@@ -63,6 +67,7 @@ class Pathfinder:
 
         # Find first path
         first_path = self.find_path(self.graph.start_zone, self.graph.end_zone)
+
         if not first_path:
             return []
 
@@ -97,7 +102,7 @@ class Pathfinder:
         # Fill remaining with first path if needed
         while len(paths) < k:
             paths.append(first_path)
-
+        
         return paths[:k]
 
     def _find_path_excluding_set(self, exclude: set[Zone]) -> list[Zone]:

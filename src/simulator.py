@@ -12,10 +12,8 @@ class Simulator:
         self.paths = paths
         self.turn = 0
 
-        # Create drones
         self.drones = [Drone(i + 1) for i in range(graph.nb_drones)]
 
-        # Track where each drone is
         self.drone_positions: dict[Drone, Zone] = {}
 
         # Track progress in path for each drone
@@ -101,10 +99,6 @@ class Simulator:
         """Get the next zone in the drone's path."""
         current_index = self.path_index[drone]
         path = self.paths[drone.id - 1]
-
-        if current_index >= len(path) - 1:
-            return None
-
         return path[current_index + 1]
 
     def _can_move_considering_moves(

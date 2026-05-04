@@ -65,12 +65,17 @@ def parse_file(filepath: str) -> tuple[int, list[Zone], list[Connection], Zone, 
                 print(f"Error on line {line_number}: Invalid number '{number_str}' for nb_drones")
                 sys.exit(1)
             if nb_drones <= 0:
-                print(f"Error on line {line_number}: nb_drones must be a positive integer, got {nb_drones}")
+                print(
+                    f"Error on line {line_number}: "
+                    f"nb_drones must be a positive integer, got {nb_drones}"
+                )
                 sys.exit(1)
 
             first_line_parsed = True
 
-        elif line.startswith("start_hub:") or line.startswith("end_hub:") or line.startswith("hub:"):
+        elif (line.startswith("start_hub:") or
+              line.startswith("end_hub:") or
+              line.startswith("hub:")):
             parts = line.split(":", 1)
             zone_type = parts[0]
             rest = parts[1].strip()
@@ -104,10 +109,15 @@ def parse_file(filepath: str) -> tuple[int, list[Zone], list[Connection], Zone, 
                         try:
                             max_drones = int(value)
                         except ValueError:
-                            print(f"Error on line {line_number}: max_drones must be an integer, got '{value}'")
+                            print(
+                                f"Error on line {line_number}: max_drones must be an integer,"
+                                f" got '{value}'")
                             sys.exit(1)
                         if max_drones <= 0:
-                            print(f"Error on line {line_number}: max_drones must be positive, got {max_drones}")
+                            print(
+                                f"Error on line {line_number}: "
+                                f"max_drones must be positive, got {max_drones}"
+                            )
                             sys.exit(1)
 
             # parse zone type, (must be valid)
@@ -119,7 +129,10 @@ def parse_file(filepath: str) -> tuple[int, list[Zone], list[Connection], Zone, 
             # Parse name and coordinates
             tokens = main_part.split()
             if len(tokens) != 3:
-                print(f"Error on line {line_number}: Invalid zone format, expected '<name> <x> <y>'")
+                print(
+                    f"Error on line {line_number}: "
+                    f"Invalid zone format, expected '<name> <x> <y>'"
+                )
                 sys.exit(1)
             name = tokens[0]
             # ADD HERE - validate name has no dashes
@@ -153,7 +166,6 @@ def parse_file(filepath: str) -> tuple[int, list[Zone], list[Connection], Zone, 
                     print(f"Error on line {line_number}: Multiple end_hub definitions found")
                     sys.exit(1)
                 end_zone = zone
-
 
         else:
             # Parse connections
@@ -189,7 +201,10 @@ def parse_file(filepath: str) -> tuple[int, list[Zone], list[Connection], Zone, 
                 # Check for duplicate connections
                 for existing in connections:
                     if existing.connects(zone1, zone2):
-                        print(f"Error on line {line_number}: Duplicate connection '{name1}-{name2}'")
+                        print(
+                            f"Error on line {line_number}: "
+                            f"Duplicate connection '{name1}-{name2}'"
+                        )
                         sys.exit(1)
 
                 # Parse max_link_capacity from metadata
@@ -206,10 +221,16 @@ def parse_file(filepath: str) -> tuple[int, list[Zone], list[Connection], Zone, 
                             try:
                                 max_link_capacity = int(value)
                             except ValueError:
-                                print(f"Error on line {line_number}: max_link_capacity must be an integer")
+                                print(
+                                    f"Error on line {line_number}: "
+                                    f"max_link_capacity must be an integer"
+                                )
                                 sys.exit(1)
                             if max_link_capacity <= 0:
-                                print(f"Error on line {line_number}: max_link_capacity must be positive")
+                                print(
+                                    f"Error on line {line_number}: "
+                                    f"max_link_capacity must be positive"
+                                )
                                 sys.exit(1)
 
                 # Create Connection object

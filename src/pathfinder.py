@@ -76,7 +76,7 @@ class Pathfinder:
         paths.append(first_path)
 
         # Try to find alternative paths by excluding zones from previous paths
-        for zone in first_path[1:-1]: # Exclude middle zones only
+        for zone in first_path[1:-1]:  # Exclude middle zones only
             if len(paths) >= k:
                 break
 
@@ -121,8 +121,8 @@ class Pathfinder:
 
             for neighbor in self.graph.get_neighbors(current):
                 if (neighbor not in visited and
-                    not neighbor.is_blocked() and
-                    neighbor not in exclude):
+                        not neighbor.is_blocked() and
+                        neighbor not in exclude):
                     visited.add(neighbor)
                     came_from[neighbor] = current
                     queue.append(neighbor)
@@ -141,11 +141,8 @@ class Pathfinder:
     def _sort_by_priority(self, zones: list[Zone]) -> list[Zone]:
         """
         Sort zones to prefer priority zones first.
-        
         Args:
             zones: List of zones to sort
-            
-        Returns:
             Sorted list with priority zones first
         """
         priority_zones = [z for z in zones if z.zone_type == "priority"]

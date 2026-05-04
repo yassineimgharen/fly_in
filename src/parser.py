@@ -240,6 +240,7 @@ class Parser:
 
                 else:
                     print(f"Line {line_number}: Unknown line format: {line}")
+                    sys.exit(1)
 
             line_number += 1
         if start_zone is None:

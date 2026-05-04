@@ -12,7 +12,7 @@ end_hub: End 3 1 [color=red]
 
 # Path A (normal)
 connection: Start-A1
-connection: A1-A2
+connectio: A1-A2
 connection: A2-End
 
 # Path B (with priority)

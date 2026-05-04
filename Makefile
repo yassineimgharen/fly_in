@@ -1,5 +1,5 @@
 install:
-	@pip install -r requirements.txt
+	@pip install -r requirements.txt || true
 
 run:
 	@python3 src/main.py $(ARGS) || true

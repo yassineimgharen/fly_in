@@ -1,4 +1,5 @@
 import sys
+
 from parser import Parser
 from models import Graph
 from pathfinder import Pathfinder

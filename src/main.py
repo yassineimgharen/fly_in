@@ -1,5 +1,5 @@
 import sys
-from parser import parse_file
+from parser import Parser
 from models import Graph
 from pathfinder import Pathfinder
 from simulator import Simulator
@@ -13,7 +13,8 @@ def main() -> None:
 
     map_file = sys.argv[1]
 
-    nb_drones, zones, connections, start_zone, end_zone = parse_file(map_file)
+    parser = Parser()
+    nb_drones, zones, connections, start_zone, end_zone = parser.parse_file(map_file)
     graph = Graph(nb_drones, zones, connections, start_zone, end_zone)
 
     pathfinder = Pathfinder(graph)

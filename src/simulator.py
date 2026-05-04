@@ -95,8 +95,8 @@ class Simulator:
 
     def _get_next_zone(self, drone: Drone) -> Zone | None:
         """Get the next zone in the drone's path."""
-        current_index = self.path_index[drone]
         path = self.paths[drone.id - 1]
+        current_index = self.path_index[drone]
         return path[current_index + 1]
 
     def _can_move_considering_moves(

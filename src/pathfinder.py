@@ -28,17 +28,15 @@ class Pathfinder:
             if current == end:
                 return self._reconstruct_path(came_from, end)
 
-            # Get neighbors and sort by priority (priority zones first)
             neighbors = self.graph.get_neighbors(current)
             neighbors = self._sort_by_priority(neighbors)
 
             for neighbor in neighbors:
-                # Check if zone is blocked
                 if neighbor not in visited and not neighbor.is_blocked():
                     visited.add(neighbor)
                     came_from[neighbor] = current
                     queue.append(neighbor)
-        return []  # No path found
+        return []
 
     def _reconstruct_path(
         self,
@@ -65,11 +63,8 @@ class Pathfinder:
         Returns list of diverse paths.
         """
         paths = []
-        # paths = [[start, junction, path_a, goal]]
 
-        # Find first path
         first_path = self.find_path(self.graph.start_zone, self.graph.end_zone)
-
         if not first_path:
             return []
 
@@ -80,30 +75,15 @@ class Pathfinder:
             if len(paths) >= k:
                 break
 
-            # Try excluding this zone
             alt_path = self._find_path_excluding_set({zone})
-
-            # Check if path is different from all existing paths
             if alt_path and not self._path_exists(alt_path, paths):
                 paths.append(alt_path)
 
-        # If we still need more paths, try excluding combinations
-        if len(paths) < k and len(first_path) > 3:
-            for i in range(1, len(first_path) - 2):
-                for j in range(i + 1, len(first_path) - 1):
-                    if len(paths) >= k:
-                        break
-
-                    # Exclude two zones
-                    excluded = {first_path[i], first_path[j]}
-                    alt_path = self._find_path_excluding_set(excluded)
-
-                    if alt_path and not self._path_exists(alt_path, paths):
-                        paths.append(alt_path)
-
-        # Fill remaining with first path if needed
+        # Fill remaining with round robin distribution across found paths
+        path_count = len(paths)
         while len(paths) < k:
-            paths.append(first_path)
+            idx = len(paths) % path_count
+            paths.append(paths[idx])
 
         return paths[:k]
 

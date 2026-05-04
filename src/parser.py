@@ -45,7 +45,7 @@ def parse_file(filepath: str) -> tuple[int, list[Zone], list[Connection], Zone, 
             line_number += 1
             continue
 
-        # First non-comment line must be nb_drones
+        # First noncomment line must be nb_drones
         if not first_line_parsed:
             if not line.startswith("nb_drones:"):
                 print(f"Error on line {line_number}: First line must be 'nb_drones: <number>'")
@@ -58,7 +58,6 @@ def parse_file(filepath: str) -> tuple[int, list[Zone], list[Connection], Zone, 
 
             number_str = parts[1].strip()
 
-            # Convert to integer
             try:
                 nb_drones = int(number_str)
             except ValueError:
@@ -80,10 +79,8 @@ def parse_file(filepath: str) -> tuple[int, list[Zone], list[Connection], Zone, 
             zone_type = parts[0]
             rest = parts[1].strip()
 
-            # Step 3: Check if metadata exists
             if "[" in rest:
                 main_part, metadata_part = rest.split("[", 1)
-
                 main_part = main_part.strip()
                 metadata_part = metadata_part.rstrip("]")
             else:
@@ -120,7 +117,6 @@ def parse_file(filepath: str) -> tuple[int, list[Zone], list[Connection], Zone, 
                             )
                             sys.exit(1)
 
-            # parse zone type, (must be valid)
             valid_types = ["normal", "blocked", "restricted", "priority"]
             if zone_type_attr not in valid_types:
                 print(f"Error on line {line_number}: Invalid zone type '{zone_type_attr}'")
@@ -135,7 +131,6 @@ def parse_file(filepath: str) -> tuple[int, list[Zone], list[Connection], Zone, 
                 )
                 sys.exit(1)
             name = tokens[0]
-            # ADD HERE - validate name has no dashes
             if "-" in name:
                 print(f"Error on line {line_number}: Zone name '{name}' cannot contain dashes")
                 sys.exit(1)
@@ -150,7 +145,6 @@ def parse_file(filepath: str) -> tuple[int, list[Zone], list[Connection], Zone, 
             if find_zone_by_name(name) is not None:
                 print(f"Error on line {line_number}: Zone '{name}' already defined")
                 sys.exit(1)
-            # create Zone obj
             zone = Zone(name, x, y, zone_type_attr, max_drones, color)
             zones.append(zone)
 
@@ -170,10 +164,9 @@ def parse_file(filepath: str) -> tuple[int, list[Zone], list[Connection], Zone, 
         else:
             # Parse connections
             if line.startswith("connection:"):
-                # Split by ":"
                 parts = line.split(":", 1)
                 rest = parts[1].strip()
-                # Check for metadata
+
                 if "[" in rest:
                     main_part, metadata_part = rest.split("[", 1)
                     main_part = main_part.strip()
@@ -182,7 +175,6 @@ def parse_file(filepath: str) -> tuple[int, list[Zone], list[Connection], Zone, 
                     main_part = rest
                     metadata_part = None
 
-                # Split zone names by "-"
                 zone_names = main_part.split("-")
                 # Find Zone objects by name
                 name1 = zone_names[0]
@@ -190,7 +182,6 @@ def parse_file(filepath: str) -> tuple[int, list[Zone], list[Connection], Zone, 
 
                 zone1 = find_zone_by_name(name1)
                 zone2 = find_zone_by_name(name2)
-                # Validate zones exist
                 if zone1 is None:
                     print(f"Error on line {line_number}: Unknown zone '{name1}'")
                     sys.exit(1)
@@ -198,7 +189,6 @@ def parse_file(filepath: str) -> tuple[int, list[Zone], list[Connection], Zone, 
                     print(f"Error on line {line_number}: Unknown zone '{name2}'")
                     sys.exit(1)
 
-                # Check for duplicate connections
                 for existing in connections:
                     if existing.connects(zone1, zone2):
                         print(
@@ -233,7 +223,6 @@ def parse_file(filepath: str) -> tuple[int, list[Zone], list[Connection], Zone, 
                                 )
                                 sys.exit(1)
 
-                # Create Connection object
                 connection = Connection(zone1, zone2, max_link_capacity)
                 connections.append(connection)
 
@@ -241,7 +230,6 @@ def parse_file(filepath: str) -> tuple[int, list[Zone], list[Connection], Zone, 
                 print(f"Line {line_number}: Unknown line format: {line}")
 
         line_number += 1
-    # Validate we have start and end
     if start_zone is None:
         print("Error: No start_hub defined")
         sys.exit(1)

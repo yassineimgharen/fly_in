@@ -2,7 +2,7 @@ install:
 	@pip install -r requirements.txt
 
 run:
-	@python3 src/main.py
+	@python3 src/main.py $(ARGS) || true
 
 debug:
 	@python3 -m pdb src/main.py

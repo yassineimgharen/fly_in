@@ -6,7 +6,7 @@ from models import Zone, Connection
 
 class Parser:
     """Parser class for drone network input files."""
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the Parser."""
         pass
 

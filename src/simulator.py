@@ -22,7 +22,6 @@ class Simulator:
         # Track drones in transit to restricted zones
         self.in_transit: dict[Drone, tuple[Zone, Zone]] = {}
 
-        # Initialize all drones at start
         for drone in self.drones:
             self.drone_positions[drone] = graph.start_zone
             self.path_index[drone] = 0
@@ -53,7 +52,6 @@ class Simulator:
                 next_zone = self._get_next_zone(drone)
                 moves_this_turn.append((drone, current_zone, next_zone))
 
-            # Execute moves
             executed_moves: list[tuple[Drone, Zone, Zone]] = []
             for drone, from_zone, to_zone in moves_this_turn:
                 if self._can_move_considering_moves(drone, from_zone, to_zone, executed_moves):

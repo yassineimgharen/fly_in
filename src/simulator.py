@@ -54,7 +54,7 @@ class Simulator:
                 moves_this_turn.append((drone, current_zone, next_zone))
 
             # Execute moves
-            executed_moves = []
+            executed_moves: list[tuple[Drone, Zone, Zone]] = []
             for drone, from_zone, to_zone in moves_this_turn:
                 if self._can_move_considering_moves(drone, from_zone, to_zone, executed_moves):
                     executed_moves.append((drone, from_zone, to_zone))
@@ -147,7 +147,7 @@ class Simulator:
                (moved_from == to_zone and moved_to == from_zone):
                 using_connection += 1
 
-        return using_connection < connection.max_link_capacity
+        return bool(using_connection < connection.max_link_capacity)
 
     def _move_drone(self, drone: Drone, next_zone: Zone) -> None:
         """Move drone to next zone."""

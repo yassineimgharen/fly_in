@@ -25,14 +25,14 @@ def parse_file(filepath: str) -> tuple[int, list[Zone], list[Connection], Zone, 
 
     nb_drones = 0
     first_line_parsed = False
-    zones = []
-    connections = []
+    zones: list[Zone] = []
+    connections: list[Connection] = []
     start_zone = None
     end_zone = None
 
     line_number = 1
 
-    def find_zone_by_name(name: str):
+    def find_zone_by_name(name: str) -> Zone | None:
         """Find a zone by its name."""
         for zone in zones:
             if zone.name == name:

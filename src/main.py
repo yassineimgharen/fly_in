@@ -20,6 +20,9 @@ def main() -> None:
 
     pathfinder = Pathfinder(graph)
     paths = pathfinder.find_multiple_paths(graph.nb_drones)
+    if not paths:
+        print("Error: No valid path found from start_hub to end_hub")
+        sys.exit(1)
 
     simulator = Simulator(graph, paths)
     simulator.run()

@@ -194,3 +194,6 @@ First: Complete moves from drones that started traveling last turn
 Then: Plan new moves for this turn
 Finally: Execute new moves
 
+# restricted
+Turn T: drone starts moving to restricted → stored in in_transit (not in the zone yet)
+Turn T+1: drone finishes and arrives → _move_drone(...)

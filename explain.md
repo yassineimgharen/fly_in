@@ -197,3 +197,8 @@ Finally: Execute new moves
 # restricted
 Turn T: drone starts moving to restricted → stored in in_transit (not in the zone yet)
 Turn T+1: drone finishes and arrives → _move_drone(...)
+
+# live coding
+Zone R: 1/1 drones
+Zone Start: 2/∞ drones (or whatever you choose)
+Connection Start-R: 1/1 used

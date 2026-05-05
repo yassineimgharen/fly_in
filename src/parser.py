@@ -87,7 +87,7 @@ class Parser:
                 zone_type = parts[0]
                 rest = parts[1].strip()
 
-                if "[" in rest:
+                if "[" in rest and "]" in rest:
                     main_part, metadata_part = rest.split("[", 1)
                     main_part = main_part.strip()
                     metadata_part = metadata_part.rstrip("]")
@@ -125,7 +125,9 @@ class Parser:
                                     f"max_drones must be positive, got {max_drones}"
                                 )
                                 sys.exit(1)
-
+                        else:
+                            print(f"Error on line {line_number}: Unknown metadata key '{key}'")
+                            sys.exit(1)
                 valid_types = ["normal", "blocked", "restricted", "priority"]
                 if zone_type_attr not in valid_types:
                     print(f"Error on line {line_number}: Invalid zone type '{zone_type_attr}'")

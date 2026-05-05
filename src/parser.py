@@ -178,7 +178,7 @@ class Parser:
                     parts = line.split(":", 1)
                     rest = parts[1].strip()
 
-                    if "[" in rest:
+                    if "[" in rest and "]" in rest:
                         main_part, metadata_part = rest.split("[", 1)
                         main_part = main_part.strip()
                         metadata_part = metadata_part.rstrip("]")

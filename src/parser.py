@@ -187,6 +187,11 @@ class Parser:
                         metadata_part = None
 
                     zone_names = main_part.split("-")
+                    if len(zone_names) != 2:
+                        print(
+                            f"Error on line {line_number}: Invalid connection format,"
+                            f" expected 'zone1-zone2'")
+                        sys.exit(1)
                     # Find Zone objects by name
                     name1 = zone_names[0]
                     name2 = zone_names[1]
